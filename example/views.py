@@ -8,11 +8,22 @@ def index(request):
         if form.is_valid():
             print("VALID!")
             print(form.cleaned_data["captcha"])
-            return redirect("index")
+            context = {"title": "Success!",
+                       "result": "You're not a robot!"
+                       }
+            return render(request, 'result.html', context)
         else:
             print("INVALID!")
+            context = {"title": "Fail!",
+                       "result": "You're a robot!"
+                       }
+            return render(request, 'result.html', context)
     else:
         form = ContactForm()
         
     context = {"form": form}
     return render(request, 'index.html', context)
+
+def result(request):
+    
+    return render(request, 'result.html')
